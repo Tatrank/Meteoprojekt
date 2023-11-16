@@ -1,15 +1,40 @@
 "use client";
-import Image from "next/image";
-import { signIn, signOut, useSession } from "next-auth/react";
 
+import { LineChart } from "@mui/x-charts/LineChart";
+import { trpc } from "../_trpc/client";
+import { useEffect, useState } from "react";
 export default function Home() {
+  let data = [{ axi: [{ valueX: 12, valueY: 13 }] }];
+  let datas = trpc.getData.useQuery();
+  let y;
+  let x;
+
   return (
-    <h1
-      onClick={() => {
-        signIn();
-      }}
-    >
-      fdsaf
-    </h1>
+    <>
+      {data && (
+        <LineChart
+          xAxis={[
+            {
+              data: data
+                ? data[0].axi.map((data) => {
+                    return data.valueX;
+                  })
+                : [],
+            },
+          ]}
+          series={[
+            {
+              data: data
+                ? data[0].axi.map((data) => {
+                    return data.valueY;
+                  })
+                : [],
+            },
+          ]}
+          width={500}
+          height={300}
+        />
+      )}
+    </>
   );
 }

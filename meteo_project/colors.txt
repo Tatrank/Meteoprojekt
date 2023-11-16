@@ -1,0 +1,14 @@
+light mode
+text #010409
+background #dbe6fa
+primary #82a9ed
+secondary #dfe9fb
+accent #2d6fe1
+
+
+dark mode
+text #f6f9fe
+background #051024
+primary #12397d
+secondary #040e1f
+accent #1e60d2

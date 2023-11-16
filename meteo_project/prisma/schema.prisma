@@ -38,14 +38,14 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
+  id            String      @id @default(cuid())
   name          String?
-  email         String?   @unique
+  email         String?     @unique
   emailVerified DateTime?
   image         String?
   accounts      Account[]
   sessions      Session[]
-
+  dashboards    dashboard[]
 }
 
 model VerificationToken {
@@ -54,4 +54,28 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model dashboard {
+  id     String  @id @default(cuid())
+  name   String
+  User   User?   @relation(fields: [userId], references: [id])
+  userId String?
+  graphs graph[]
+}
+
+model graph {
+  id          String     @id @default(cuid())
+  name        String
+  dashboard   dashboard? @relation(fields: [dashboardId], references: [id])
+  dashboardId String?
+  axi         axis[]
+}
+
+model axis {
+  id      String  @id @default(cuid())
+  valueX  Int
+  valueY  Int
+  graph   graph?  @relation(fields: [graphId], references: [id])
+  graphId String?
 }
